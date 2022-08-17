@@ -86,6 +86,8 @@ class EditFragment : Fragment() {
         // TODO
         binding.editBtnSave.setOnClickListener {
             if (contact != null) {
+                contact.name = binding.editTextInputName.text.toString()
+                contact.number = binding.editTextInputNumber.text.toString()
                 viewModel.updateContact(contact)
             }
         }
