@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import de.syntax_institut.telefonbuch.R
 import de.syntax_institut.telefonbuch.databinding.FragmentMainBinding
+import de.syntax_institut.telefonbuch.util.ContactAdapter
 
 /**
  * Dieses Fragment verwaltet die Anzeige der Kontaktliste
@@ -49,6 +51,14 @@ class MainFragment : Fragment() {
 
         // Beobachtet die Kontaktliste und erstellt einen neuen Adapter bei jeder Änderung
         // TODO
+        val recyclerView = binding.rvContacts
+
+        viewModel.contactList.observe(
+            viewLifecycleOwner,
+            Observer {
+                recyclerView.adapter = ContactAdapter(it)
+            }
+        )
 
         // Setzt einen Click Listener auf den Add Button, in dem zum AddFragment navigiert wird
         binding.btnAddContact.setOnClickListener {

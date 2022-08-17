@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import de.syntax_institut.telefonbuch.R
+import de.syntax_institut.telefonbuch.data.datamodels.Contact
 import de.syntax_institut.telefonbuch.databinding.FragmentAddBinding
 import de.syntax_institut.telefonbuch.ui.main.MainViewModel
 
@@ -52,10 +54,24 @@ class AddFragment : Fragment() {
 
         // Es wird der Status der Aktion beobachtet, also ob die Aktion bereits ausgeführt wurde
         // TODO
+        viewModel.complete.observe(
+            viewLifecycleOwner,
+            Observer {
+                if (it) {
+                    findNavController().navigate(AddFragmentDirections.actionAddFragmentToMainFragment())
+                    viewModel.unsetComplete()
+                }
+            }
+        )
 
         // Setze einen Click Listener auf den Add Button, in dem ein neuer Kontakt mit dem
         // eingegebenen Namen und der eingegebenen Telefonnummer eingefügt wird
         // TODO
+        binding.addBtnAdd.setOnClickListener {
+            val name = binding.addTextInputName.text.toString()
+            val number = binding.addTextInputNumber.text.toString()
+                viewModel.insertContact(Contact(name = name, number = number))
+            }
 
         // Setze einen Click Listener auf den Cancel Button,
         // in dem wieder zum Mainfragment navigiert wird

@@ -9,13 +9,14 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import de.syntax_institut.telefonbuch.R
+import de.syntax_institut.telefonbuch.data.datamodels.Contact
 import de.syntax_institut.telefonbuch.ui.main.MainFragmentDirections
 
 /**
  * Diese Klasse organisiert mithilfe der ViewHolder Klasse das Recycling
  */
 class ContactAdapter(
-    private val dataset: List<Any>
+    private val dataset: List<Contact>
 ) : RecyclerView.Adapter<ContactAdapter.ItemViewHolder>() {
 
     /**
@@ -50,9 +51,11 @@ class ContactAdapter(
 
         // Setze den Namen und die Telefonnummer
         // TODO
-
+        holder.tvName.text = contact.name
+        holder.tvNumber.text = contact.number
         // Weise der Variablen contactId die id aus dem Contact Objekt zu
-        val contactId: Long = 0 // TODO
+        // TODO
+        val contactId: Long = contact.id
 
         // Setze einen Click Listener auf die CardView, in dem zum EditFragment navigiert wird
         holder.cvContact.setOnClickListener {
